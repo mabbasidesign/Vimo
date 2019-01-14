@@ -13,7 +13,31 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const port = process.env.PORT || 3002;
-app.listen(port, () => {
-    console.log(`Server running at ${port}`)
+
+// Models
+const { User } = require('./models/user');
+
+//=================================
+//              USERS
+//=================================
+
+app.post('/api/users/register',(req,res)=>{
+    const user = new User(req.body);
+});
+
+// const port = process.env.PORT || 3002;
+// app.listen(port, () => {
+//     console.log(`Server running at ${port}`)
+// });
+
+app.post('/api/users/register',(req,res)=>{
+    const user = new User(req.body);
+
+    user.save((err,doc)=>{
+        if(err) return res.json({success:false,err});
+        res.status(200).json({
+            success: true,
+            userdaya: doc
+        })
+    })
 });
