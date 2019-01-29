@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import HomeSlider from './home_slider';
+import HomePromotion from './home_promotions';
 
 class Home extends Component {
     state = {  }
 
-    // componentDidMount = () => {
-    //     axios.get('/api/product/brands').then(response => {
-    //         console.log(response);
-    //     })}
-
     render() { 
         return (
             <div>
-                Home
+                <HomeSlider />
+                <HomePromotion />
             </div>
         );
     }
