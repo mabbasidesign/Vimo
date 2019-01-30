@@ -23,8 +23,8 @@ class Home extends Component {
                     />
                 <HomePromotion />
                     <CardBlock
-                        list={this.props.products.byArival}
-                        title="New Arival"
+                        list={this.props.products.byArrival}
+                        title="New arrivals"
                     />
             </div>
         );
