@@ -8,18 +8,6 @@ import {
 import { PRODUCT_SERVER } from '../utils/misc';
 
 
-// export function getProductsBySell(){
-//     // /articles?sortBy=sold&order=desc&limit=100
-//     const request = axios.get(`${PRODUCT_SERVER}/articles?sortBy=sold&order=desc&limit=4`)
-//         .then(response => response.data);
-    
-//     return {
-//         type: get-GET_PRODUCTS_BY_SELL,
-//         payload: request
-//     }
-// }
-
-
 export function getProductsBySell(){
     const request = axios.get(`${PRODUCT_SERVER}/articles?sortBy=sold&order=desc&limit=4`)
         .then(response => response.data);
