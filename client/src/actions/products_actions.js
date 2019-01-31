@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {
     GET_PRODUCTS_BY_SELL,
-    GET_PRODUCTS_BY_ARRIVAL
+    GET_PRODUCTS_BY_ARRIVAL,
+    GET_BRANDS,
+    GETWOODS
 
 } from './types';
 
@@ -33,3 +35,20 @@ export function getProductsByArrival(){
 export function etProductsByArrival(){
 
 }
+
+
+
+//////////////////////////////////////
+////////////// Products //////////////
+//////////////////////////////////////
+
+
+export function getBrands(){
+
+}
+
+
+export function getWoods(){
+    
+}
+

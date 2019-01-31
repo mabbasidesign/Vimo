@@ -68,10 +68,7 @@ class Header extends Component {
         </Link>
     )
 
-
   
-
-
     cartLink = (item, i) => {
         const user = this.props.user.userData;
         return (
