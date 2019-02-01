@@ -3,7 +3,7 @@ import {
     GET_PRODUCTS_BY_SELL,
     GET_PRODUCTS_BY_ARRIVAL,
     GET_BRANDS,
-    GETWOODS
+    GET_WOODS
 
 } from './types';
 
@@ -39,16 +39,28 @@ export function etProductsByArrival(){
 
 
 //////////////////////////////////////
-////////////// Products //////////////
+//////////          Categories 
 //////////////////////////////////////
 
 
 export function getBrands(){
+    const request = axios.get(`${PRODUCT_SERVER}/brands`)
+        .then(response => response.data);
 
+    return {
+        type: GET_BRANDS,
+        payload: request
+    }
 }
 
 
 export function getWoods(){
-    
+    const request = axios.get(`${PRODUCT_SERVER}/woods`)
+        .then(response => response.data);
+
+    return {
+        type: GET_WOODS,
+        payload: request
+    }
 }
 

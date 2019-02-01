@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import UserLayout from '../../hoc/user';
 import MyButton from '../../utils/button';
 
@@ -22,7 +22,7 @@ const userDashboard = ({user}) => {
                 />
             </div>
 
-            <div className="user_nfo_panel">
+            <div className="user_info_panel">
                 <h1>History purchases</h1>
                 <div className="user_product_block_wrapper">
                         history
