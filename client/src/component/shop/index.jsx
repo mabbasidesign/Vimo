@@ -5,9 +5,10 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
 import faAngleUp from '@fortawesome/fontawesome-free-solid/faAngleUp';
 
-import {frets} from '../../utils/Form/fixed_categories';
+import {frets, price} from '../../utils/Form/fixed_categories';
 import { connect } from 'react-redux';
 import CollapsCheckBox from '../../utils/collapsCheckBox';
+import CollapseRadio from '../../utils/collapseRadio';
 
 class Shop extends Component {
 
@@ -28,9 +29,26 @@ class Shop extends Component {
         this.props.dispatch(getWoods());
     }
 
+    handlePrice = (value) => {
+        const data = price;
+        let array = [];
+
+        for(let key in data){
+            if(data[key]._id === parseInt(value, 10)){
+                array = data[key].array
+            }
+        }
+        return array;
+    }
+
     handleFilters = (filters, category) => {
         const newFilters = {... this.state.filters};
         newFilters[category] = filters;
+
+        if(category === 'price'){
+            let priceValue = this.handlePrice(filters)
+            newFilters[category] = priceValue;
+        }
 
         this.setState({
             filters: newFilters
@@ -68,6 +86,12 @@ class Shop extends Component {
                             list={products.woods}
                             handleFilters={(filters) => {this.handleFilters(filters, 'woods')}}
                         />
+                        <CollapseRadio
+                                initState={true}
+                                title="Price"
+                                list={price}
+                                handleFilters={(filters)=> this.handleFilters(filters,'price')}
+                            />
                     </div>
                     <div className="right">
                         Right
