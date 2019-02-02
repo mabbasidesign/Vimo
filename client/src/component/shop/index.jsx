@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PageTop from '../../utils/page_top';
-import { getBrands, getWoods } from '../../actions/products_actions';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
-import faAngleUp from '@fortawesome/fontawesome-free-solid/faAngleUp';
+import { getBrands, getWoods, getProductsToShop } from '../../actions/products_actions';
+// import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+// import faAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
+// import faAngleUp from '@fortawesome/fontawesome-free-solid/faAngleUp';
 
 import {frets, price} from '../../utils/Form/fixed_categories';
 import { connect } from 'react-redux';
@@ -27,6 +27,11 @@ class Shop extends Component {
     componentDidMount = () => {
         this.props.dispatch(getBrands());
         this.props.dispatch(getWoods());
+        this.props.dispatch(getProductsToShop(
+            this.state.skip,
+            this.state.limit,
+            this.state.filters
+        ))
     }
 
     handlePrice = (value) => {
