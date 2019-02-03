@@ -33,26 +33,52 @@ export function getProductsByArrival(){
 }
 
 
-export function getProductsToShop(skip, limit, filters = [], previousStae = []){
+// export function getProductsToShop(skip, limit, filters = [], previousStae = []){
+//     const data = {
+//         limit,
+//         skip,
+//         filters
+//     }
+
+//     const request = axios.post(`${PRODUCT_SERVER}/shop`, data)
+//         .then(response => {
+//             return{
+//                 size: response.data.size,
+//                 articles: response.data.articles
+//             }
+//         })
+//     return {
+//         type: GET_PRODUCTS_TO_SHOP,
+//         payload: request
+//     }
+// }
+
+
+export function getProductsToShop(skip, limit,filters =[], previousState = []){
     const data = {
         limit,
         skip,
         filters
     }
 
-    const request = axios.post(`${PRODUCT_SERVER}/shop`, data)
-        .then(response => {
-            return{
-                size: response.data.size,
-                article: response.data.article
-            }
-        })
+    const request = axios.post(`${PRODUCT_SERVER}/shop`,data)
+                .then(response => {
+                    let newState = [
+                        ...previousState,
+                        ...response.data.articles
+                    ];
+                    return {
+                        size: response.data.size,
+                        articles: newState
+                    }
+                });
+
     return {
         type: GET_PRODUCTS_TO_SHOP,
         payload: request
     }
-}
 
+}
 
 
 //////////////////////////////////////

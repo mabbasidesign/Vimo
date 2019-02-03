@@ -24,9 +24,10 @@ class Shop extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount(){
         this.props.dispatch(getBrands());
         this.props.dispatch(getWoods());
+
         this.props.dispatch(getProductsToShop(
             this.state.skip,
             this.state.limit,
@@ -39,30 +40,45 @@ class Shop extends Component {
         let array = [];
 
         for(let key in data){
-            if(data[key]._id === parseInt(value, 10)){
+            if(data[key]._id === parseInt(value,10)){
                 array = data[key].array
             }
         }
         return array;
     }
 
-    handleFilters = (filters, category) => {
-        const newFilters = {... this.state.filters};
-        newFilters[category] = filters;
 
-        if(category === 'price'){
-            let priceValue = this.handlePrice(filters)
-            newFilters[category] = priceValue;
+    handleFilters = (filters,category) => {
+       const newFilters = {...this.state.filters}
+       newFilters[category] = filters;
+
+        if(category === "price"){
+            let priceValues = this.handlePrice(filters);
+            newFilters[category] = priceValues
         }
 
-        this.setState({
-            filters: newFilters
+       this.showFilteredResults(newFilters)
+       this.setState({
+           filters: newFilters
+       })
+    }
+
+    showFilteredResults = (filters) =>{
+        this.props.dispatch(getProductsToShop(
+            0,
+            this.state.limit,
+            filters
+        )).then(()=>{
+            this.setState({
+                skip:0
+            })
         })
     }
 
+
     state = {  }
     render() {
-        console.log(this.state.filters);
+        // console.log(this.state.filters);
         const products = this.props.products
         return (
             <div>
@@ -83,7 +99,7 @@ class Shop extends Component {
                             initState={false}
                             title='Frets'
                             list={frets}
-                            handleFilters={(filters) => {this.handleFilters(filters, 'brand')}}
+                            handleFilters={(filters) => {this.handleFilters(filters, 'frets')}}
                         />
                         <CollapsCheckBox
                             initState={true}
