@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PageTop from '../../utils/page_top';
 import { getBrands, getWoods, getProductsToShop } from '../../actions/products_actions';
-// import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-// import faAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
-// import faAngleUp from '@fortawesome/fontawesome-free-solid/faAngleUp';
 
 import {frets, price} from '../../utils/Form/fixed_categories';
 import { connect } from 'react-redux';
 import CollapsCheckBox from '../../utils/collapsCheckBox';
 import CollapseRadio from '../../utils/collapseRadio';
+import LodMoreCards from './loadMoreCards';
 
 class Shop extends Component {
 
@@ -115,7 +113,20 @@ class Shop extends Component {
                             />
                     </div>
                     <div className="right">
-                        Right
+                        <div className="shop_options">
+                            <div className="shop_grid clear">
+                                grids
+                            </div>
+                        </div>
+                        <div>
+                            <LodMoreCards
+                                grid={this.state.grid}
+                                limit={this.state.limit}
+                                size={products.toShopSize}
+                                products={products.toShop}
+                                loadMore={() => console.log("load more")}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
