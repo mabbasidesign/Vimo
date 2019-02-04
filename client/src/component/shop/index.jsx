@@ -313,7 +313,7 @@ class Shop extends Component {
                         <div className="right">
                             <div className="shop_options">
                                 <div className="shop_grids clear">
-                                    {/* <div
+                                    <div
                                         className={`grid_btn ${this.state.grid?'':'active'}`}
                                         onClick={()=> this.handleGrid()}
                                     >
@@ -324,7 +324,7 @@ class Shop extends Component {
                                         onClick={()=> this.handleGrid()}
                                     >
                                         <FontAwesomeIcon icon={faBars}/>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                             <div style={{clear:'both'}}>
