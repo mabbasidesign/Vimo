@@ -15,8 +15,8 @@ const Routes = () => {
   return (
     <Layout>
       <Switch>
-        <Route path='/user/dashboard' exact component={Auth(AddProduct, true)}/>
-        <Route path='/admin/add_products' exact component={Auth(userDashboard, true)}/>
+        <Route path='/user/dashboard' exact component={Auth(userDashboard, true)}/>
+        <Route path='/admin/add_products' exact component={Auth(AddProduct, true)}/>
 
         <Route path='/register' exact component={Auth(Register, false)}/>
         <Route path='/register_login'exact component={Auth(RegisterLogin, false)}/>
