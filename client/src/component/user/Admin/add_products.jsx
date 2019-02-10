@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormField from '../../../utils/Form/formField';
-import { update, generateData, isFormValid } from '../../../utils/Form/formAction';
+import { update, generateData, isFormValid, populateOptionFields } from '../../../utils/Form/formAction';
 import UserLayout from '../../../hoc/user';
 import { getBrands, getWoods } from '../../../actions/products_actions';
 
@@ -185,6 +185,22 @@ class AddProducts extends Component {
         }
     }
 
+
+    updateFiels = (newFormData) => {
+        this.setState({ formdata: newFormData })
+    }
+
+    componentDidMount(){
+        const formdata = this.state.formdata;
+
+        this.props.dispatch(getBrands()).then(response => {
+            // console.log('brand', this.props.products.brands);
+            const newFormData = populateOptionFields(formdata, this.props.products.brands, 'brand');
+            // console.log(newFormData);
+            this.updateFiels(newFormData);
+        })
+    }
+
     render() { 
         return (
             <UserLayout>
@@ -277,8 +293,8 @@ class AddProducts extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        prop: state.prop
+        products: state.products
     }
 }
- 
+
 export default connect(mapStateToProps)(AddProducts);
