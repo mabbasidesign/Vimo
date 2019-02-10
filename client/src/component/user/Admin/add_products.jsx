@@ -191,11 +191,25 @@ class AddProducts extends Component {
                 <h1>Add product</h1>
 
                 <form onSubmit={(event) => this.submitForm(event)}>
+
                 <FormField
                     id={'name'}
                     formdata={this.state.formdata.name}
                     change={(element)=> this.updateForm(element)}
                 />
+
+                <FormField
+                    id={'description'}
+                    formdata={this.state.formdata.description}
+                    change={(element)=> this.updateForm(element)}
+                />
+
+                <FormField
+                    id={'price'}
+                    formdata={this.state.formdata.price}
+                    change={(element)=> this.updateForm(element)}
+                />
+
                 </form>
             </UserLayout>           
         );
