@@ -190,6 +190,33 @@ class AddProducts extends Component {
         this.setState({ formdata: newFormData })
     }
 
+
+    updateForm = (element) => {
+        const newFormdata = update(element,this.state.formdata,'login');
+        this.setState({
+            formError: false,
+            formdata: newFormdata
+        })
+    }
+
+
+    submitForm= (event) =>{
+        event.preventDefault();
+        
+        let dataToSubmit = generateData(this.state.formdata,'login');
+        let formIsValid = isFormValid(this.state.formdata,'login')
+
+        if(formIsValid){
+            console.log(dataToSubmit);
+        }
+        else{
+            this.setState({
+                formError: true
+            })
+        }
+    }
+
+
     componentDidMount(){
         const formdata = this.state.formdata;
 
@@ -197,6 +224,11 @@ class AddProducts extends Component {
             // console.log('brand', this.props.products.brands);
             const newFormData = populateOptionFields(formdata, this.props.products.brands, 'brand');
             // console.log(newFormData);
+            this.updateFiels(newFormData);
+        })
+
+        this.props.dispatch(getWoods()).then(response => {
+            const newFormData = populateOptionFields(formdata, this.props.products.woods, 'wood');
             this.updateFiels(newFormData);
         })
     }
