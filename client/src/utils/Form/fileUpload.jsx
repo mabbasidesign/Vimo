@@ -35,7 +35,7 @@ class Fileupload extends Component {
                     response.data
                 ]
             },()=>{
-                this.props.imagesHandler(this.state.uploadedFiles)
+                this.props.imageHandler(this.state.uploadedFiles)
             })
        });
     }
@@ -49,7 +49,7 @@ class Fileupload extends Component {
             this.setState({
                 uploadedFiles: images
             },()=>{
-                this.props.imagesHandler(images)
+                this.props.imageHandler(images)
             })
         })
     }
@@ -68,6 +68,7 @@ class Fileupload extends Component {
             </div>
         ))
     )
+
 
     static getDerivedStateFromProps(props,state){
         if(props.reset){
