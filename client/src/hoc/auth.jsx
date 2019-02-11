@@ -14,7 +14,7 @@ class AuthenticationCheck extends Component {
     componentDidMount(){
         this.props.dispatch(auth()).then(response =>{
             let user = this.props.user.userData;
-            console.log(user);
+            // console.log(user);
 
             if(!user.isAuth){ //user is not authenticated
                 if(reload){ //route is private

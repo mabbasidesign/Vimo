@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormField from '../../../utils/Form/formField';
-import { update, generateData, isFormValid, populateOptionFields } from '../../../utils/Form/formAction';
+import { update, generateData, isFormValid, populateOptionFields, resetFields } from '../../../utils/Form/formAction';
 import UserLayout from '../../../hoc/user';
-import { getBrands, getWoods } from '../../../actions/products_actions';
+import FileUpload from '../../../utils/Form/fileUpload';
+import { getBrands, getWoods, addProduct, clearProduct } from '../../../actions/products_actions';
 
 class AddProducts extends Component {
 
@@ -186,13 +187,15 @@ class AddProducts extends Component {
     }
 
 
-    updateFiels = (newFormData) => {
-        this.setState({ formdata: newFormData })
+    updateFields = (newFormdata) => {
+        this.setState({
+            formdata: newFormdata
+        })
     }
 
 
     updateForm = (element) => {
-        const newFormdata = update(element,this.state.formdata,'login');
+        const newFormdata = update(element,this.state.formdata,'products');
         this.setState({
             formError: false,
             formdata: newFormdata
@@ -200,16 +203,40 @@ class AddProducts extends Component {
     }
 
 
+    resetFieldHandler = () => {
+        const newFormData = resetFields(this.state.formdata, 'products');
+
+        this.setState({
+            formdata: newFormData,
+            formSuccess: true
+        });
+
+        setTimeout(() => {
+            this.setState({
+                formSuccess: false
+            },() => {
+                this.props.dispatch(clearProduct())
+            })
+        }, 3000);
+    }
+
+
     submitForm= (event) =>{
         event.preventDefault();
         
-        let dataToSubmit = generateData(this.state.formdata,'login');
-        let formIsValid = isFormValid(this.state.formdata,'login')
+        let dataToSubmit = generateData(this.state.formdata,'products');
+        let formIsValid = isFormValid(this.state.formdata,'products')
+        console.log(dataToSubmit);
 
         if(formIsValid){
-            console.log(dataToSubmit);
-        }
-        else{
+            this.props.dispatch(addProduct(dataToSubmit)).then(()=>{
+                if( this.props.products.addProduct.success){
+                    this.resetFieldHandler();
+                }else{
+                    this.setState({formError: true})
+                }
+            })
+        } else {
             this.setState({
                 formError: true
             })
@@ -220,18 +247,22 @@ class AddProducts extends Component {
     componentDidMount(){
         const formdata = this.state.formdata;
 
-        this.props.dispatch(getBrands()).then(response => {
-            // console.log('brand', this.props.products.brands);
-            const newFormData = populateOptionFields(formdata, this.props.products.brands, 'brand');
-            // console.log(newFormData);
-            this.updateFiels(newFormData);
+        this.props.dispatch(getBrands()).then( response => {
+            const newFormData = populateOptionFields(formdata,this.props.products.brands,'brand');
+            this.updateFields(newFormData)
         })
 
-        this.props.dispatch(getWoods()).then(response => {
-            const newFormData = populateOptionFields(formdata, this.props.products.woods, 'wood');
-            this.updateFiels(newFormData);
+        this.props.dispatch(getWoods()).then( response => {
+            const newFormData = populateOptionFields(formdata,this.props.products.woods,'wood');
+            this.updateFields(newFormData)
         })
     }
+
+
+    imageHandler = (images) => {
+
+    }
+
 
     render() { 
         return (
@@ -239,6 +270,11 @@ class AddProducts extends Component {
                 <h1>Add product</h1>
 
                 <form onSubmit={(event) => this.submitForm(event)}>
+
+                <FileUpload
+                    imageHandler={(images) => this.imageHandler(images)}
+                    reset={this.state.formSuccess}
+                />
 
                 <FormField
                     id={'name'}
@@ -299,7 +335,14 @@ class AddProducts extends Component {
                     formdata={this.state.formdata.wood}
                     change={(element)=> this.updateForm(element)}
                 />
+                
+                <div className="form_devider"></div>
 
+                <FormField
+                    id={'publish'}
+                    formdata={this.state.formdata.publish}
+                    change={(element) => this.updateForm(element)}
+                />
                 {
                     this.state.formSuccess ?
                        <div className='form_success'>Success</div>
@@ -313,9 +356,10 @@ class AddProducts extends Component {
                         </div>
                     :null}
                     <button onClick={(event)=> this.submitForm(event)}>
-                        Create An Account
+                        Add Product
                     </button>
                 </div>
+
 
                 </form>
             </UserLayout>           

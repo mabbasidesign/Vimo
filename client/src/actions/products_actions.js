@@ -4,7 +4,9 @@ import {
     GET_PRODUCTS_BY_ARRIVAL,
     GET_BRANDS,
     GET_WOODS,
-    GET_PRODUCTS_TO_SHOP
+    GET_PRODUCTS_TO_SHOP,
+    ADD_PRODUCT,
+    CLEAR_PRODUCT
 
 } from './types';
 
@@ -40,7 +42,7 @@ export function getProductsToShop(skip, limit,filters =[], previousState = []){
         filters
     }
 
-    const request = axios.post(`${PRODUCT_SERVER}/shop`,data)
+    const request = axios.post(`${PRODUCT_SERVER}/shop`, data)
                 .then(response => {
                     let newState = [
                         ...previousState,
@@ -58,6 +60,17 @@ export function getProductsToShop(skip, limit,filters =[], previousState = []){
     }
 
 }
+
+export function addProduct(datatoSubmit){
+    const request = axios.post(`${PRODUCT_SERVER}/article`, datatoSubmit)
+        .then(response => response.data)
+
+    return {
+        type: ADD_PRODUCT,
+        payload: request
+    }
+}
+
 
 
 //////////////////////////////////////
@@ -86,3 +99,10 @@ export function getWoods(){
     }
 }
 
+
+export function clearProduct(){
+    return {
+        type: CLEAR_PRODUCT,
+        payload: ''
+    }
+}
