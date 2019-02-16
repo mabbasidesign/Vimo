@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImageLightBox from '../../utils/lightbox';
 
 class ProdImg extends Component {
 
@@ -46,22 +47,20 @@ class ProdImg extends Component {
     )
 
 
-    // showThumbs = () => (
-    //     this.state.lightboxImages.map((item,i)=>(
-    //         i > 0 ?
-    //             <div
-    //                 key={i}
-    //                 onClick={()=> this.handleLightBox(i)}
-    //                 className="thumb"
-    //                 style={{background: `url(${item}) no-repeat`}}
-    //             ></div>
-    //         :null
-    //     ))
-    // )
+    handleLightBox = (pos) => {
+        if(this.state.lightBoxImages.length > 0){
+            this.setState({
+                lightBox: true,
+                imagePos: pos
+            })
+        }
+    }
 
 
-    handleLightBox = () => {
-        
+    handleLightBoxClose = () => {
+        this.setState({
+            lightBox: false
+        })
     }
 
 
@@ -75,10 +74,21 @@ class ProdImg extends Component {
                         onClick={()=> this.handleLightBox(0)}
                     >
                     </div>
-                    <div className="main_thumbs">
+                </div>
+                <div className="main_thumbs">
                     { this.showThumbs(detail)}
                 </div>
-                </div>
+                {
+                    this.state.lightBox ?
+                        <ImageLightBox
+                        id={detail.id}
+                        images={this.state.lightboxImages}
+                        open={this.state.open}
+                        pos={this.state.imagePos}
+                        onclose={()=> this.handleLightBoxClose()}
+                        />
+                    :null
+                }
             </div>
         );
     }

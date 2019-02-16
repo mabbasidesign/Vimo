@@ -45,7 +45,7 @@ app.post('/api/product/shop',(req,res)=>{
     let findArgs = {};
 
     for(let key in req.body.filters){
-        if(req.body.filters[key].length >0 ){
+        if(req.body.filters[key].length > 0 ){
             if(key === 'price'){
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
