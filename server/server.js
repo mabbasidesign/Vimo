@@ -279,6 +279,38 @@ app.get('/api/users/removeimage',auth,admin,(req,res)=>{
 })
 
 
+app.post('/api/users/addToCard', auth, (req, res) => {
+    User.findOne({ _id: req.user._id }, (err, doc) => {
+        let duplicate = false;
+        
+        doc.cart.forEach((item) => {
+            if(item.id == req.query.productId){
+                duplicated = true;
+            }
+        })
+        if(duplicate){
+            
+        }
+        else{
+            User.findOneAndUpdate(
+                { _id: req.user._id },
+                { $push:{ cart:{
+                    id: mongoose.type.ObjectId(req.query.productId),
+                    quentity: 1,
+                    date: Date.now()
+                }}},
+                { new: true },
+                (err, doc) => {
+                    if(err) return res.json({succes:false, err})
+                    res.status(200).json(doc.cart)
+                }
+            )
+        }
+
+    })
+})
+
+
 const port = process.env.PORT || 3002;
 app.listen(port,()=>{
     console.log(`Server Running at ${port}`)
