@@ -4,11 +4,10 @@ import Lightbox from 'react-images';
 class ImageLightBox extends Component {
 
     state = {
-        lightBoxIsOpen: true,
+        lightboxIsOpen: true,
         currentImage: this.props.pos,
-        images: []
+        images:[]
     }
-
 
     static getDerivedStateFromProps(props,state){
         if(props.images){
@@ -39,20 +38,18 @@ class ImageLightBox extends Component {
         this.props.onclose();
     }
 
-    render() { 
+    render() {
         return (
-            <div>
-                <Lightbox
+            <Lightbox
                 currentImage={this.state.currentImage}
                 images={this.state.images}
                 isOpen={this.state.lightboxIsOpen}
                 onClickPrev={()=> this.gotoPrevious()}
                 onClickNext={()=> this.gotoNext()}
                 onClose={()=>this.closeLightbox()}
-                />
-            </div>
+            />
         );
     }
 }
- 
+
 export default ImageLightBox;

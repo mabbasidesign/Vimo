@@ -1,26 +1,60 @@
 import React, { Component } from 'react';
 import ImageLightBox from '../../utils/lightbox';
 
+
 class ProdImg extends Component {
 
     state = {
-        lightBox: false,
-        imagePos: 0,
-        lightBoxImages: [],        
+        lightbox: false,
+        imagePos:0,
+        lightboxImages:[]
     }
+
+
 
     componentDidMount(){
         if(this.props.detail.images.length > 0){
-            let lightBoxImages = [];
+            let lightboxImages = [];
 
-            this.props.detail.images.forEach(item => {
-                lightBoxImages.push(item.url)
+            this.props.detail.images.forEach(item=>{
+                lightboxImages.push(item.url)
             })
+
             this.setState({
-                lightBoxImages
+                lightboxImages
             })
         }
     }
+
+
+    handleLightBox = (pos) => {
+        if(this.state.lightboxImages.length > 0){
+            this.setState({
+                lightbox: true,
+                imagePos: pos
+            })
+        }
+    }
+
+    handleLightBoxClose = () => {
+        this.setState({
+            lightbox: false
+        })
+    }
+
+
+    showThumbs = () => (
+        this.state.lightboxImages.map((item,i)=>(
+            i > 0 ?
+                <div
+                    key={i}
+                    onClick={()=> this.handleLightBox(i)}
+                    className="thumb"
+                    style={{background: `url(${item}) no-repeat`}}
+                ></div>
+            :null
+        ))
+    )
 
 
     renderCardImage = (images) => {
@@ -31,46 +65,13 @@ class ProdImg extends Component {
         }
     }
 
-
-    showThumbs = () => (
-        this.state.lightBoxImages.map((item, i) => (
-            i > 0 ?
-                <div 
-                    key={i}
-                    onClick={() => this.handleLightBox(i)}
-                    className='thumb'
-                    style={{background: `url(${item}) no-repeat`}}
-                >
-                </div>
-            : null
-        ))
-    )
-
-
-    handleLightBox = (pos) => {
-        if(this.state.lightBoxImages.length > 0){
-            this.setState({
-                lightBox: true,
-                imagePos: pos
-            })
-        }
-    }
-
-
-    handleLightBoxClose = () => {
-        this.setState({
-            lightBox: false
-        })
-    }
-
-
     render() {
         const {detail} = this.props;
         return (
-            <div className='product_image_container'>
-                <div className='main_pic'>
+            <div className="product_image_container">
+                <div className="main_pic">
                     <div
-                        style={{background:`url(${this.renderCardImage(detail.images)}) no-repeat`}}
+                        style={{background:`url(${this.renderCardImage(detail.images)}) no-repeat`}} 
                         onClick={()=> this.handleLightBox(0)}
                     >
                     </div>
@@ -79,13 +80,13 @@ class ProdImg extends Component {
                     { this.showThumbs(detail)}
                 </div>
                 {
-                    this.state.lightBox ?
+                    this.state.lightbox ?
                         <ImageLightBox
-                        id={detail.id}
-                        images={this.state.lightboxImages}
-                        open={this.state.open}
-                        pos={this.state.imagePos}
-                        onclose={()=> this.handleLightBoxClose()}
+                            id={detail.id}
+                            images={this.state.lightboxImages}
+                            open={this.state.open}
+                            pos={this.state.imagePos}
+                            onclose={()=> this.handleLightBoxClose()}
                         />
                     :null
                 }
@@ -93,6 +94,5 @@ class ProdImg extends Component {
         );
     }
 }
- 
-export default ProdImg;
 
+export default ProdImg;
