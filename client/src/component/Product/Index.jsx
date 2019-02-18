@@ -13,7 +13,12 @@ class ProductPage extends Component {
 
     componentDidMount = () => {
         const id = this.props.match.params.id;
-        this.props.dispatch(getProductDetail(id))
+        this.props.dispatch(getProductDetail(id)).then(esponse => {
+            if(!this.props.products.prodDetail){
+                console.log('no article found');
+                this.props.history.push('/');
+            }
+        })
     }
 
     componentWillMount = () => {
