@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser'); 
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 
@@ -45,7 +45,7 @@ app.post('/api/product/shop',(req,res)=>{
     let findArgs = {};
 
     for(let key in req.body.filters){
-        if(req.body.filters[key].length > 0 ){
+        if(req.body.filters[key].length >0 ){
             if(key === 'price'){
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
@@ -79,7 +79,7 @@ app.post('/api/product/shop',(req,res)=>{
 // /articles?sortBy=createdAt&order=desc&limit=4
 
 // BY SELL
-// /articles?sortBy=sold&order=desc&limit=100&skip=5
+// /articles?sortBy=sold&order=desc&limit=100
 app.get('/api/product/articles',(req,res)=>{
 
     let order = req.query.order ? req.query.order : 'asc';
@@ -120,19 +120,6 @@ app.get('/api/product/articles_by_id',(req,res)=>{
         return res.status(200).send(docs)
     })
 });
-
-
-// app.post('/api/product/article',auth,admin,(req,res)=>{
-//     const product = new Product(req.body);
-
-//     product.save((err,doc)=>{
-//         if(err) return res.json({success:false,err});
-//         res.status(200).json({
-//             success: true,
-//             article: doc
-//         })
-//     })
-// })
 
 
 app.post('/api/product/article',auth,admin,(req,res)=>{
@@ -252,8 +239,7 @@ app.get('/api/users/logout',auth,(req,res)=>{
             })
         }
     )
-})
-
+});
 
 app.post('/api/users/uploadimage',auth,admin,formidable(),(req,res)=>{
     cloudinary.uploader.upload(req.files.file.path,(result)=>{
@@ -268,7 +254,6 @@ app.post('/api/users/uploadimage',auth,admin,formidable(),(req,res)=>{
     })
 })
 
-
 app.get('/api/users/removeimage',auth,admin,(req,res)=>{
     let image_id = req.query.public_id;
 
@@ -279,36 +264,46 @@ app.get('/api/users/removeimage',auth,admin,(req,res)=>{
 })
 
 
-app.post('/api/users/addToCard', auth, (req, res) => {
-    User.findOne({ _id: req.user._id }, (err, doc) => {
+app.post('/api/users/addToCart',auth,(req,res)=>{
+
+    User.findOne({_id: req.user._id},(err,doc)=>{
         let duplicate = false;
-        
-        doc.cart.forEach((item) => {
+
+        doc.cart.forEach((item)=>{
             if(item.id == req.query.productId){
-                duplicated = true;
+                  duplicate = true;  
             }
         })
+
         if(duplicate){
-            
-        }
-        else{
             User.findOneAndUpdate(
-                { _id: req.user._id },
+                {_id: req.user._id, "cart.id":mongoose.Types.ObjectId(req.query.productId)},
+                { $inc: { "cart.$.quantity":1 } },
+                { new:true },
+                ()=>{
+                    if(err) return res.json({success:false,err});
+                    res.status(200).json(doc.cart)
+                }
+            )
+        } else {
+            User.findOneAndUpdate(
+                {_id: req.user._id},
                 { $push:{ cart:{
-                    id: mongoose.type.ObjectId(req.query.productId),
-                    quentity: 1,
+                    id: mongoose.Types.ObjectId(req.query.productId),
+                    quantity:1,
                     date: Date.now()
-                }}},
+                } }},
                 { new: true },
-                (err, doc) => {
-                    if(err) return res.json({succes:false, err})
+                (err,doc)=>{
+                    if(err) return res.json({success:false, err});
                     res.status(200).json(doc.cart)
                 }
             )
         }
-
     })
 })
+
+
 
 
 const port = process.env.PORT || 3002;

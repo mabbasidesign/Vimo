@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MyButton from './button';
 
 import { connect } from 'react-redux';
-import { addToCard } from '../../src/actions/user_actions';
+import { addToCart } from '../../src/actions/user_actions';
 
 class Card extends Component {
 
@@ -57,7 +57,7 @@ class Card extends Component {
                                 type="bag_link"
                                 runAction={()=>{
                                     props.user.userData.isAuth ?
-                                        this.props.dispatch(addToCard(props._id))
+                                        this.props.dispatch(addToCart(props._id))
                                     :
                                     console.log('you nedd to log in')
                                 }}
