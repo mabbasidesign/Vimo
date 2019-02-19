@@ -29,16 +29,42 @@ class UserCard extends Component {
                 });
                 this.props.dispatch(getCartItems(carttItems, user.userData.cart))
                 .then(() => {
-                    
+                    if(this.props.user.cartDetail.length > 0){
+                        this.calculateTotal(this.props.user.cartDetail);
+                    }
                 })
             }
         }
     }
 
 
-    removeFromCart = () => {
-        
+    calculateTotal = (cartDetail) => {
+        let total = 0;
+
+        cartDetail.forEach(item => {
+            total += parseInt(item.price, 10) * item.quantity
+        })
+
+        this.setState({
+            total,
+            showTotal: true
+        })
     }
+
+
+    showNoItemMessage = () => {
+
+    }
+
+
+    removeFromCart = () => (
+        <div className='cart_no_items'>
+            <FontAwesomeIcon icon={faFrown}/>
+            <div>
+                You have no items
+            </div>
+        </div>
+    )
 
 
     render() { 
@@ -52,7 +78,38 @@ class UserCard extends Component {
                            type='cart'
                            removeItem={(id) => this.removeFromCart(id)}
                         />
+                        {
+                            this.state.showTotal ?
+                            <div>
+                                <div className='user_cart_sum'>
+                                    <div>
+                                        Total: amount ${this.state.total}
+                                    </div>
+
+                                </div>
+                            </div>
+                            :
+                            this.state.showSucces ?
+                                <div className='cart_success'>
+                                    <FontAwesomeIcon icon={faSmile}/>
+                                    <div>
+                                        Thanks You
+                                    </div>
+                                    <div>
+                                        Your order is now colplete
+                                    </div>
+                                </div>
+                            :
+                            this.showNoItemMessage()
+                        }
                     </div>
+                    {
+                        this.state.showTotal ?
+                            <div className='paypal_button_container'>
+                                Paypal
+                            </div>
+                        : null
+                    }
                 </div>
             </UserLayout>
         );
