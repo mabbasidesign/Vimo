@@ -1,0 +1,31 @@
+import React, { Component } from 'react';
+import UserLayout from '../../hoc/user';
+import { connect } from 'react-redux';
+
+import FontAwsomeIcon from '@fortawesome/react-fontawesome';
+import faForm from '@fortawesome/fontawesome-free-solid/faForm';
+import faSmile from '@fortawesome/fontawesome-free-solid/faSmile';
+
+
+class UserCard extends Component {
+    state = {  }
+    render() { 
+        return (
+            <UserLayout>
+                <div>
+                    cart
+                </div>
+            </UserLayout>
+        );
+    }
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+        prop: state.prop
+    }
+}
+
+ 
+export default connect(mapStateToProps)(UserCard);

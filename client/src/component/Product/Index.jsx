@@ -25,6 +25,7 @@ class ProductPage extends Component {
 
 
     addToCartHandler(id){
+        console.log('')
         this.props.dispatch(addToCart(id))
     }
     

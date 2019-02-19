@@ -12,6 +12,7 @@ import userDashboard from './component/user/index';
 import Shop from './component/shop/index';
 import AddProduct from './component/user/Admin/add_products';
 import ManageCategories from './component/user/Admin/manage_categories';
+import UserCart from './component/user/cart'
 
 const Routes = () => {
   return (
