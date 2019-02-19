@@ -19,6 +19,7 @@ const Routes = () => {
     <Layout>
       <Switch>
         <Route path='/user/dashboard' exact component={Auth(userDashboard, true)}/>
+        <Route path='/user/cart' exact component={Auth(UserCart, true)}/>
         <Route path='/admin/add_products' exact component={Auth(AddProduct, true)}/>
         <Route path='/admin/manage_categories' exact component={Auth(ManageCategories, true)}/>
 
