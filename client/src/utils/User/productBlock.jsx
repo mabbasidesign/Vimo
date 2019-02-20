@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserProductBlock = ({products, removeItem}) => {
+const UserProductBlock = ({products,removeItem}) => {
 
     const renderCartImage = (images) => {
         if(images.length > 0){
