@@ -5,6 +5,8 @@ export const LOGOUT_USER = 'logout_user';
 export const ADD_TO_CARD_USER = 'add_to_cars_user';
 export const GET_CART_ITEMS_USER = 'get_cart_items_users';
 export const REMOVE_CART_USER_ITEM = 'remove_cart_user_item';
+export const UPDATE_DATA_USER = 'update_data_user';
+export const CLEAR_UPDATE_USER_DATA = ' clear_update_user_data';
 
 export const GET_PRODUCTS_BY_SELL = 'get_products_by_sell'
 export const GET_PRODUCTS_BY_ARRIVAL = 'get_products-by-arrival'

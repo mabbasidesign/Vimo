@@ -3,6 +3,8 @@ import FormField from '../../utils/Form/formField';
 import { update, generateData, isFormValid, PopulateFields } from '../../utils/Form/formAction';
 
 import { connect } from 'react-redux';
+import { updateUserData, clearUpdateUser } from '../../actions/user_actions';
+
 
 class UpdatePersonalInfo  extends Component {
 
@@ -85,7 +87,37 @@ class UpdatePersonalInfo  extends Component {
         let formIsValid = isFormValid(this.state.formdata,'update_user')
 
         if(formIsValid){
-           console.log('data to submit', dataToSubmit)
+
+            // this.props.dispatch(updateUserData(dataToSubmit)).then(() => {
+            //     if(this.props.user.userData.success){
+            //         this.setState({
+            //             formSuccess: true,
+            //         },() => {
+            //             setTimeout(() => {
+            //                 this.props.dispatch(clearUpdateUser()),
+            //                 this.setState({
+            //                     formSuccess: false
+            //                 })
+            //             }, 2000);
+            //         })
+            //     }
+            // })
+
+            this.props.dispatch(updateUserData(dataToSubmit)).then(()=>{
+                if(this.props.user.updateUser.success){
+                    this.setState({
+                        formSuccess: true
+                    },()=>{
+                        setTimeout(()=>{
+                            this.props.dispatch(clearUpdateUser());
+                            this.setState({
+                                formSuccess: false
+                            })
+                        },2000)
+                    })
+                }
+            })
+
         } else {
             this.setState({
                 formError: true
@@ -129,7 +161,7 @@ class UpdatePersonalInfo  extends Component {
 
                     {
                         this.state.formSuccess?
-                            <div className='form_succes'>Succes</div>
+                            <div className='form_success'>Succes</div>
                         :null
                     }
 
@@ -137,7 +169,7 @@ class UpdatePersonalInfo  extends Component {
                         {this.state.formError ?
                             <div className="error_label">
                                 Please check your data
-                                        </div>
+                            </div>
                             : null}
                         <button onClick={(event) => this.submitForm(event)}>
                             Update Personal Info
