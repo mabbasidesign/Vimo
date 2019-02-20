@@ -84,7 +84,7 @@ export const populateOptionFields = (formdata, arrayData =[], field) => {
 }
 
 
-export const resetFields = (formdata, formName)=>{
+export const resetFields = (formdata, formName) => {
     const newFormdata = {...formdata};
 
     for(let key in newFormdata){
@@ -100,4 +100,15 @@ export const resetFields = (formdata, formName)=>{
     }
 
     return newFormdata
+}
+
+
+export const PopulateFields = (formData, fields) => {
+    for (let key in formData){
+        formData[key].value = fields[key];
+        formData[key].valid = 'true';
+        formData[key].touched = false;
+        formData[key].validationMessage = '';
+    }
+    return formData;
 }

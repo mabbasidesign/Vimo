@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormField from '../../utils/Form/formField';
-import { update, generateData, isFormValid } from '../../utils/Form/formAction';
+import { update, generateData, isFormValid, PopulateFields } from '../../utils/Form/formAction';
 
 import { connect } from 'react-redux';
 
@@ -60,6 +60,15 @@ class UpdatePersonalInfo  extends Component {
     }
 
 
+    componentDidMount = () => {
+        const newFormData = PopulateFields(this.state.formdata, this.props.user.userData);
+
+        this.setState({
+            formdata: newFormData
+        })
+    }
+
+
     updateForm = (element) => {
         const newFormdata = update(element,this.state.formdata,'update_user');
         this.setState({
@@ -89,13 +98,65 @@ class UpdatePersonalInfo  extends Component {
     render() { 
         return (
             <div>
-                <form>
-                    personal info
+                <form onsubmit={(event) => this.submitForm(event)}>
+                    
+                    <h2>Personal Information</h2>
+
+                    <div className="form_block_two">
+                        <div className="block">
+                            <FormField
+                                id={'name'}
+                                formdata={this.state.formdata.name}
+                                change={(element) => this.updateForm(element)}
+                            />
+                        </div>
+                        <div className="block">
+                            <FormField
+                                id={'lastname'}
+                                formdata={this.state.formdata.lastname}
+                                change={(element) => this.updateForm(element)}
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <FormField
+                            id={'email'}
+                            formdata={this.state.formdata.email}
+                            change={(element) => this.updateForm(element)}
+                        />
+                    </div>
+
+                    {
+                        this.state.formSuccess?
+                            <div className='form_succes'>Succes</div>
+                        :null
+                    }
+
+                    <div>
+                        {this.state.formError ?
+                            <div className="error_label">
+                                Please check your data
+                                        </div>
+                            : null}
+                        <button onClick={(event) => this.submitForm(event)}>
+                            Update Personal Info
+                        </button>
+                    </div>
+
                 </form>
             </div>
         );
     }
 }
- 
-export default UpdatePersonalInfo;
+
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+
+export default connect(mapStateToProps)(UpdatePersonalInfo);
 

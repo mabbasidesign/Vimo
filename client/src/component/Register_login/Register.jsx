@@ -141,6 +141,7 @@ class Register extends Component {
                         <div className='left'>
                             <form onSubmit={(event) => {this.submitForm(event)}}>
                                 <h2>Personal Information</h2>
+
                                 <div className="form_block_two">
                                     <div className="block">
                                         <FormField
@@ -157,6 +158,7 @@ class Register extends Component {
                                         />
                                     </div>
                                 </div>
+
                                 <div>
                                     <FormField
                                         id={'email'}
@@ -164,6 +166,7 @@ class Register extends Component {
                                         change={(element)=> this.updateForm(element)}
                                     />
                                 </div>
+                                
                                 <h2>Verify Password</h2>
                                 <div className="form_block_two">
                                     <div className="block">
