@@ -11,7 +11,7 @@ import {
     GET_PRODUCT_DETAIL,
     CLEAR_PRODUCT_DETAIL
 } from '../actions/types';
- 
+
 
 export default function(state={},action){
     switch(action.type){

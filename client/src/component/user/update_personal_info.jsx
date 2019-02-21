@@ -87,22 +87,6 @@ class UpdatePersonalInfo  extends Component {
         let formIsValid = isFormValid(this.state.formdata,'update_user')
 
         if(formIsValid){
-
-            // this.props.dispatch(updateUserData(dataToSubmit)).then(() => {
-            //     if(this.props.user.userData.success){
-            //         this.setState({
-            //             formSuccess: true,
-            //         },() => {
-            //             setTimeout(() => {
-            //                 this.props.dispatch(clearUpdateUser()),
-            //                 this.setState({
-            //                     formSuccess: false
-            //                 })
-            //             }, 2000);
-            //         })
-            //     }
-            // })
-
             this.props.dispatch(updateUserData(dataToSubmit)).then(()=>{
                 if(this.props.user.updateUser.success){
                     this.setState({
@@ -124,7 +108,6 @@ class UpdatePersonalInfo  extends Component {
             })
         }
     }
-
 
 
     render() { 
