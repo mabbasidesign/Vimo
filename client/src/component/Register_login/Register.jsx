@@ -3,7 +3,6 @@ import FormField from '../../utils/Form/formField';
 import { update, generateData, isFormValid } from '../../utils/Form/formAction';
 import Dialog from '@material-ui/core/Dialog';
 
-
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/user_actions';
 

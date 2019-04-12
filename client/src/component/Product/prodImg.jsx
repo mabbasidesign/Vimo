@@ -11,7 +11,6 @@ class ProdImg extends Component {
     }
 
 
-
     componentDidMount(){
         if(this.props.detail.images.length > 0){
             let lightboxImages = [];
